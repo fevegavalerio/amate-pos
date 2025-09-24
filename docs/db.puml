@@ -1,29 +1,4 @@
-@startuml
-entity roles {
-  *id : serial PK
-  --
-  name : varchar(50)
-}
-
-entity users {
-  *id : serial PK
-  --
-  username : varchar(50)
-  password_hash : varchar(255)
-  full_name : varchar(100)
-  email : varchar(100)
-  role_id : int FK -> roles.id
-}
-
-entity customers {
-  *id : serial PK
-  --
-  name : varchar(100)
-  email : varchar(100)
-  phone : varchar(20)
-  created_at : timestamp
-}
-
+@startuml amate-pos
 entity categories {
   *id : serial PK
   --
@@ -79,9 +54,6 @@ entity inventory_movements {
   created_at : timestamp
 }
 
-users }o--|| roles
-sales }o--|| customers
-sales }o--|| users
 sale_items }o--|| sales
 sale_items }o--|| products
 payments }o--|| sales
