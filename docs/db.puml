@@ -1,0 +1,90 @@
+@startuml
+entity roles {
+  *id : serial PK
+  --
+  name : varchar(50)
+}
+
+entity users {
+  *id : serial PK
+  --
+  username : varchar(50)
+  password_hash : varchar(255)
+  full_name : varchar(100)
+  email : varchar(100)
+  role_id : int FK -> roles.id
+}
+
+entity customers {
+  *id : serial PK
+  --
+  name : varchar(100)
+  email : varchar(100)
+  phone : varchar(20)
+  created_at : timestamp
+}
+
+entity categories {
+  *id : serial PK
+  --
+  name : varchar(100)
+  description : text
+}
+
+entity products {
+  *id : serial PK
+  --
+  name : varchar(100)
+  description : text
+  price : numeric(10,2)
+  stock : int
+  category_id : int FK -> categories.id
+}
+
+entity sales {
+  *id : serial PK
+  --
+  customer_id : int FK -> customers.id
+  user_id : int FK -> users.id
+  total_amount : numeric(10,2)
+  created_at : timestamp
+}
+
+entity sale_items {
+  *id : serial PK
+  --
+  sale_id : int FK -> sales.id
+  product_id : int FK -> products.id
+  quantity : int
+  price : numeric(10,2)
+  subtotal : numeric(10,2)
+}
+
+entity payments {
+  *id : serial PK
+  --
+  sale_id : int FK -> sales.id
+  amount : numeric(10,2)
+  method : varchar(50) -- cash, card, etc.
+  paid_at : timestamp
+}
+
+entity inventory_movements {
+  *id : serial PK
+  --
+  product_id : int FK -> products.id
+  quantity : int
+  movement_type : varchar(20) -- IN / OUT
+  reason : varchar(100)
+  created_at : timestamp
+}
+
+users }o--|| roles
+sales }o--|| customers
+sales }o--|| users
+sale_items }o--|| sales
+sale_items }o--|| products
+payments }o--|| sales
+products }o--|| categories
+inventory_movements }o--|| products
+@enduml
