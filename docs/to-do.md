@@ -1,4 +1,5 @@
 # To-do
-- Run postgres container (kind vs compose)
-- Inital bootstrap DJango app
-- Define API endpoints
+- [x] Run postgres container (kind vs compose)
+- [x] Inital bootstrap DJango app
+- [ ] Connect DJango app to postgres
+- [ ] Define API endpoints
