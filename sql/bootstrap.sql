@@ -14,7 +14,10 @@ INSERT INTO category (name, description)
 VALUES ('Reposteria dulce', 'Productos como crocantes, pie y tres leches');
 
 INSERT INTO category (name, description) 
-VALUES ('Sandwich', 'Productos como sandwiches y beagels');
+VALUES ('Sandwich', 'Productos como sandwiches hechos con pan de masa madre');
+
+INSERT INTO category (name, description) 
+VALUES ('Bagel', 'Productos como bagels rellenos');
 
 INSERT INTO category (name, description) 
 VALUES ('Bebidas calientes', 'Productos como cafe, te y chocolate');
