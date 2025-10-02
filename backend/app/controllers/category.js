@@ -1,72 +1,35 @@
-const categories = [
-    { id: 1, name: "Beverages", description: "Drinks and refreshments" },
-    { id: 2, name: "Snacks", description: "Quick bites and light food" },
-    { id: 3, name: "Desserts", description: "Sweet treats and pastries" },
-    { id: 4, name: "Main Course", description: "Hearty meals and dishes" },
-    { id: 5, name: "Salads", description: "Fresh and healthy salads" }
-  ];
+const categoryService = require('../services/category');
 
 exports.getCategories = (req, res) => {
-    
-  const response = {status: 200, data: categories};
-
-  res.json(response);
+    const categories = categoryService.getAllCategories();
+    res.json({status: 200, data: categories});
 };
 
 exports.getCategoryById = (req, res) => {
-  const categoryId = req.params.id;
-
-  for (let category of categories) {
-    if (category.id == categoryId) {
-      const response = {status: 200, data: category};
-      return res.json(response);
+    const category = categoryService.getCategoryById(req.params.id);
+    if (!category) {
+        return res.status(404).json({status: 404, message: "Category not found"});
     }
-  }
-
-  const response = {status: 404, message: "Category not found"};
-  res.status(404).json(response);
-}
+    res.json({status: 200, data: category});
+};
 
 exports.createCategory = (req, res) => {
-  const { name, description } = req.body;
-  const newCategory = {
-    id: categories.length + 1,
-    name,
-    description
-  };
-  categories.push(newCategory);
-  const response = {status: 201, data: newCategory};
-  res.status(201).json(response);
+    const newCategory = categoryService.createCategory(req.body);
+    res.status(201).json({status: 201, data: newCategory});
 };
 
 exports.updateCategory = (req, res) => {
-  const categoryId = req.params.id;
-  const { name, description } = req.body;
-
-  for (let category of categories) {
-    if (category.id == categoryId) {
-      category.name = name || category.name;
-      category.description = description || category.description;
-      const response = {status: 200, data: category};
-      return res.json(response);
+    const updatedCategory = categoryService.updateCategory(req.params.id, req.body);
+    if (!updatedCategory) {
+        return res.status(404).json({status: 404, message: "Category not found"});
     }
-  }
-
-  const response = {status: 404, message: "Category not found"};
-  res.status(404).json(response);
+    res.json({status: 200, data: updatedCategory});
 };
 
 exports.deleteCategory = (req, res) => {
-  const categoryId = req.params.id;
-
-  for (let i = 0; i < categories.length; i++) {
-    if (categories[i].id == categoryId) {
-      categories.splice(i, 1);
-      const response = {status: 200, message: "Category deleted"};
-      return res.json(response);
+    const deleted = categoryService.deleteCategory(req.params.id);
+    if (!deleted) {
+        return res.status(404).json({status: 404, message: "Category not found"});
     }
-  }
-
-  const response = {status: 404, message: "Category not found"};
-  res.status(404).json(response);
+    res.json({status: 200, message: "Category deleted"});
 };
