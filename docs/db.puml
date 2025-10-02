@@ -19,8 +19,6 @@ entity products {
 entity sales {
   *id : serial PK
   --
-  customer_id : int FK -> customers.id
-  user_id : int FK -> users.id
   total_amount : numeric(10,2)
   created_at : timestamp
 }
