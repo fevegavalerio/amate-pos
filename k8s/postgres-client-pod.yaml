@@ -13,4 +13,4 @@ spec:
         - name: PGPASSWORD
           value: amatepass
       # You can exec into this pod and use psql to connect to your postgres service:
-      # kubectl exec -it postgres-client -- psql -h <postgres-service> -U amateuser amatepos
+      # kubectl exec -it postgres-client -- psql -h postgres -U amateuser amatepos
