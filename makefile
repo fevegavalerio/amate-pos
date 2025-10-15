@@ -22,10 +22,6 @@ delete-all-db:
 	kubectl delete -n default -f k8s/postgres-service.yaml || true
 	kubectl delete -n default configmap bootstrap-db || true
 
-.PHONY: deploy-db-client
-deploy-db-client:
-	kubectl apply -n default -f k8s/postgres-client-pod.yaml
-
 .PHONY: create-cluster
 create-cluster:
 	kind create cluster --config=k8s/kind-config.yaml
